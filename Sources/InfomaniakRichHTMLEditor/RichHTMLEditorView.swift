@@ -146,6 +146,9 @@ public class RichHTMLEditorView: PlatformView {
 
     /// The web view that displays the HTML and handle the input.
     public private(set) var webView: RichHTMLWebView!
+    
+    /// Whether the underlying HTML can be edited.
+    public var editable = false
 
     // MARK: - Private properties
 
@@ -272,7 +275,9 @@ public extension RichHTMLEditorView {
     }
 
     private func loadWebViewPage() {
-        guard let indexURL = Bundle.module.url(forResource: "index", withExtension: "html") else {
+        let indexName = editable ? "editableIndex" : "staticIndex"
+        
+        guard let indexURL = Bundle.module.url(forResource: indexName, withExtension: "html") else {
             return
         }
 
