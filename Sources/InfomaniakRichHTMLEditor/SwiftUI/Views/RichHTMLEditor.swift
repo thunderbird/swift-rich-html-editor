@@ -36,15 +36,17 @@ public struct RichHTMLEditor: PlateformViewRepresentable {
 
     @Binding public var html: String
     public var selection: Binding<String>?
+    public var editable: Bool
 
     @ObservedObject public var textAttributes: TextAttributes
     public let spellCheckEnabled: Bool
     public let autoCorrectEnabled: Bool
 
-    public init(html: Binding<String>, selection: Binding<String>? = nil, textAttributes: TextAttributes,
+    public init(html: Binding<String>, selection: Binding<String>? = nil, editable: Bool = false, textAttributes: TextAttributes,
                 spellCheckEnabled: Bool = true, autoCorrectEnabled: Bool = true) {
         _html = html
         self.selection = selection
+        self.editable = editable
         _textAttributes = ObservedObject(wrappedValue: textAttributes)
         self.spellCheckEnabled = spellCheckEnabled
         self.autoCorrectEnabled = autoCorrectEnabled
