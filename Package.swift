@@ -5,9 +5,9 @@ import PackageDescription
 let package: Package = Package(
     name: "InfomaniakRichHTMLEditor",
     platforms: [
-        .iOS(.v14),
-        .visionOS(.v1),
-        .macOS(.v11)
+        .iOS(.v18),
+        .visionOS(.v2),
+        .macOS(.v15)
     ],
     products: [
         .library(
@@ -19,7 +19,7 @@ let package: Package = Package(
         .target(
             name: "InfomaniakRichHTMLEditor",
             resources: [
-                .process("Resources/")
+                .process("Resources")
             ]
         ),
         .testTarget(

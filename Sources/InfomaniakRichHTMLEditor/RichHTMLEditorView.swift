@@ -216,7 +216,7 @@ public extension RichHTMLEditorView {
     ///
     /// - Parameter cssURL: URL to the CSS file.
     func injectAdditionalCSS(_ cssURL: URL) {
-        guard let css = try? String(contentsOf: cssURL) else { return }
+        guard let css = try? String(contentsOf: cssURL, encoding: .utf8) else { return }
         injectAdditionalCSS(css)
     }
 }

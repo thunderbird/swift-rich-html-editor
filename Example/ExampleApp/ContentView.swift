@@ -1,29 +1,9 @@
-//  Licensed under the Apache License, Version 2.0 (the "License");
-//  you may not use this file except in compliance with the License.
-//  You may obtain a copy of the License at
-//
-//      http://www.apache.org/licenses/LICENSE-2.0
-//
-//  Unless required by applicable law or agreed to in writing,
-//  software distributed under the License is distributed on an
-//  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-//  KIND, either express or implied.  See the License for the
-//  specific language governing permissions and limitations
-//  under the License.
-
 import SwiftUI
 
-enum EditorState: String, CaseIterable {
-    case scrollable = "Scrollable"
-    case notScrollable = "Not Scrollable"
-    case fixedSize = "Fixed Size"
-    case editorWithToolbar = "Editor with Toolbar"
-    case editorWithSwiftUIToolbar = "Editor with SwiftUI Toolbar"
-}
+struct ContentView: View {
+    @State private var editorState: EditorState = .scrollable
 
-struct RootView: View {
-    @State private var editorState = EditorState.scrollable
-
+    // MARK: View
     var body: some View {
         NavigationStack {
             Group {
@@ -43,7 +23,7 @@ struct RootView: View {
             .navigationTitle("Infomaniak - RichHTMLEditor (SwiftUI)")
             .toolbarTitleDisplayMode(.inline)
             .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
+                ToolbarItem {
                     Picker("Switch Editor State", selection: $editorState) {
                         ForEach(EditorState.allCases, id: \.self) { state in
                             Text(state.rawValue)
@@ -56,5 +36,13 @@ struct RootView: View {
 }
 
 #Preview {
-    RootView()
+    ContentView()
+}
+
+private enum EditorState: String, CaseIterable {
+    case scrollable = "Scrollable"
+    case notScrollable = "Not Scrollable"
+    case fixedSize = "Fixed Size"
+    case editorWithToolbar = "Editor with Toolbar"
+    case editorWithSwiftUIToolbar = "Editor with SwiftUI Toolbar"
 }

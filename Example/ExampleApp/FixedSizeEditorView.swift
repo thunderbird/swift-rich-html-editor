@@ -14,7 +14,9 @@ struct FixedSizeEditorView: View {
 
     var body: some View {
         RichHTMLEditor(html: $html, textAttributes: textAttributes)
-            .editorScrollable(true)
+            #if canImport(UIKit)
+        .editorScrollable(true)
+            #endif
             .overlay(
                 RoundedRectangle(cornerRadius: 8)
                     .stroke(Color.blue, lineWidth: 1)

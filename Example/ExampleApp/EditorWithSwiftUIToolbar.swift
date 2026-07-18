@@ -91,7 +91,7 @@ struct EditorToolbarButton: View {
 }
 
 // MARK: - UIView wrapper for input accessory
-
+#if canImport(UIKit)
 final class EditorSwiftUIToolbar: UIView {
     private let hostingController: UIHostingController<EditorSwiftUIToolbarContent>
 
@@ -102,18 +102,10 @@ final class EditorSwiftUIToolbar: UIView {
     init(textAttributes: TextAttributes) {
         hostingController = UIHostingController(rootView: EditorSwiftUIToolbarContent(textAttributes: textAttributes))
         hostingController.view.backgroundColor = .clear
-        hostingController.view.translatesAutoresizingMaskIntoConstraints = false
+        hostingController.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
 
-        super.init(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 44))
-        autoresizingMask = .flexibleWidth
-
+        super.init(frame: .zero)
         addSubview(hostingController.view)
-        NSLayoutConstraint.activate([
-            hostingController.view.leadingAnchor.constraint(equalTo: leadingAnchor),
-            hostingController.view.trailingAnchor.constraint(equalTo: trailingAnchor),
-            hostingController.view.topAnchor.constraint(equalTo: topAnchor),
-            hostingController.view.bottomAnchor.constraint(equalTo: bottomAnchor)
-        ])
     }
 
     @available(*, unavailable)
@@ -121,6 +113,7 @@ final class EditorSwiftUIToolbar: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 }
+#endif
 
 // MARK: -
 
@@ -130,8 +123,12 @@ struct EditorWithSwiftUIToolbar: View {
 
     var body: some View {
         RichHTMLEditor(html: $html, textAttributes: textAttributes)
-            .editorScrollable(true)
-            .editorInputAccessoryView(EditorSwiftUIToolbar(textAttributes: textAttributes))
+            #if canImport(UIKit)
+        .editorScrollable(true)
+            #endif
+            #if os(iOS)
+        .editorInputAccessoryView(EditorSwiftUIToolbar(textAttributes: textAttributes))
+        #endif
     }
 }
 

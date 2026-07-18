@@ -15,6 +15,7 @@ import Combine
 import InfomaniakRichHTMLEditor
 import SwiftUI
 
+#if canImport(UIKit)
 final class EditorToolbar: UIView {
     private lazy var boldButton: UIButton = {
         let button = UIButton(configuration: .bordered())
@@ -66,6 +67,7 @@ final class EditorToolbar: UIView {
         textAttributes.bold()
     }
 }
+#endif
 
 struct EditorWithToolbar: View {
     @State private var html = "<h1>EditorWithToolbar</h1><p>This editor <strong>has a toolbar</strong>. Focus the editor to reveal it.</p>"
@@ -73,8 +75,12 @@ struct EditorWithToolbar: View {
 
     var body: some View {
         RichHTMLEditor(html: $html, textAttributes: textAttributes)
-            .editorScrollable(true)
-            .editorInputAccessoryView(EditorToolbar(textAttributes: textAttributes))
+            #if canImport(UIKit)
+        .editorScrollable(true)
+            #endif
+            #if os(iOS)
+        .editorInputAccessoryView(EditorToolbar(textAttributes: textAttributes))
+        #endif
     }
 }
 
