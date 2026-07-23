@@ -118,7 +118,7 @@ final class EditorSwiftUIToolbar: UIView {
 // MARK: -
 
 struct EditorWithSwiftUIToolbar: View {
-    @State private var html = "<h1>EditorWithToolbar</h1><p>This editor <strong>has a toolbar</strong>. Focus the editor to reveal it. The toolbar can be scrolled horizontally.</p>"
+    @State private var html = String.sampleHTML
     @StateObject private var textAttributes = TextAttributes()
 
     var body: some View {
